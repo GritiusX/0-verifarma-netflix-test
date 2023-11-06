@@ -14,7 +14,10 @@ import { RouterView } from "vue-router";
 
 <style>
 .main-background {
-	@apply flex flex-col w-full bg-zinc-900 p-8 text-neutral-200;
+	@apply flex flex-col w-full bg-zinc-900 p-8 text-neutral-200 min-h-[calc(100vh-68px)];
+}
+.formkit-button-classes {
+	@apply bg-red-500 px-3 py-1 rounded-lg;
 }
 .navbar-input-classes {
 	@apply p-2 bg-zinc-900 text-neutral-200 font-normal w-full rounded-lg outline-offset-0 outline-1 outline-red-300 placeholder:text-gray-400;

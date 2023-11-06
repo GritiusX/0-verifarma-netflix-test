@@ -1,0 +1,9 @@
+GET http://localhost:4040/
+###
+POST http://localhost:4040/register
+Content-Type: application/json
+
+{
+    "username":"Guido",
+    "password":"123"
+}

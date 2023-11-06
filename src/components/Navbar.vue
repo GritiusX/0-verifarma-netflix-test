@@ -1,7 +1,11 @@
 <template>
-	<nav class="navbar-classes">
+	<nav
+		:class="
+			userStore.isAuthenticated ? `navbar-classes` : `logged-out-navbar-classes`
+		"
+	>
 		<router-link to="/" class="main-logo">Fakeflix</router-link>
-		<div class="desktop-nav">
+		<div v-if="userStore.isAuthenticated" class="desktop-nav">
 			<div class="main-nav-buttons">
 				<router-link
 					class="router-link-class"
@@ -9,20 +13,15 @@
 					activeClass="active-router-link-class"
 					>Home</router-link
 				>
-				<router-link
-					class="router-link-class"
-					to="/about"
-					activeClass="active-router-link-class"
-					>About</router-link
-				>
 			</div>
+
 			<span class="sub-nav-buttons">
-				<div class="search-bar-container">
+				<form @submit.prevent="handleSearchForm" class="search-bar-container">
 					<XyzTransition xyz="fade left duration-5 ease-in-out">
 						<InputText
 							v-if="searchbarClicked"
 							class="navbar-input-classes"
-							v-model="searchInputValue"
+							v-model="store.searchInputValue"
 							placeholder="Movie search"
 						/>
 					</XyzTransition>
@@ -30,11 +29,15 @@
 						@click="toggleSearchbar"
 						class="h-8 w-8 cursor-pointer hover:text-red-500 transition-all duration-200"
 					/>
-				</div>
+				</form>
 				<UserIcon class="h-8 w-8 cursor-not-allowed" />
 			</span>
 		</div>
-		<div class="mobile-menu-button" @click="toggleMobileMenu">
+		<div
+			v-if="userStore.isAuthenticated"
+			class="mobile-menu-button"
+			@click="toggleMobileMenu"
+		>
 			<Bars3Icon class="h-8 w-8 text-blue-500" />
 		</div>
 	</nav>
@@ -42,9 +45,6 @@
 		<div class="mobile-nav" v-if="mobileMenu">
 			<router-link to="/" activeClass="active-router-link-class"
 				>Home</router-link
-			>
-			<router-link to="/about" activeClass="active-router-link-class"
-				>About</router-link
 			>
 			<span class="line-through">Profile</span>
 		</div>
@@ -58,8 +58,15 @@ import {
 	UserIcon,
 } from "@heroicons/vue/24/solid";
 import { ref } from "vue";
+import { useMoviesStore } from "../stores/movies";
+import { useUserStore } from "../stores/user";
+import { useRoute, useRouter } from "vue-router";
 
-const searchInputValue = ref("");
+const store = useMoviesStore();
+const userStore = useUserStore();
+const route = useRoute();
+const router = useRouter();
+
 const mobileMenu = ref(false);
 const searchbarClicked = ref(false);
 
@@ -69,11 +76,21 @@ const toggleMobileMenu = () => {
 const toggleSearchbar = () => {
 	searchbarClicked.value = !searchbarClicked.value;
 };
+
+const handleSearchForm = () => {
+	if (route.name !== "Home") {
+		router.push("/");
+	}
+	store.getAllMovies(store.searchInputValue);
+};
 </script>
 
 <style scoped>
 .navbar-classes {
 	@apply flex w-full h-16 relative p-4 justify-between items-center font-medium bg-black/80 text-white;
+}
+.logged-out-navbar-classes {
+	@apply flex w-full justify-center p-4 bg-zinc-900;
 }
 .main-logo {
 	@apply text-red-500 font-bold text-3xl mr-6 hover:text-red-700 transition-all duration-200;
