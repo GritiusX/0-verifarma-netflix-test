@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 
+//this variables should go inside a .env file
 const API_URL = "www.omdbapi.com";
 const API_KEY = "6a66d7b4";
 
@@ -24,7 +25,8 @@ export const useMoviesStore = defineStore("moviesStore", () => {
 		if (!keyword) {
 			keyword = "Batman";
 		}
-		//await new Promise((resolve) => setTimeout(resolve, 2000));
+
+		await new Promise((resolve) => setTimeout(resolve, 1500)); //I added this delay on purpose to show loading states
 
 		try {
 			localStorage.setItem("searchInputValue", keyword);

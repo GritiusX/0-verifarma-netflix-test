@@ -1,6 +1,6 @@
 <template>
 	<article v-if="!movies" class="movies-error-container">
-		<p>{{ store.errorMovieUnavailable }}</p>
+		<ErrorComponent />
 	</article>
 	<article v-else>
 		<div class="pagination-container">
@@ -41,6 +41,7 @@ import { ref } from "vue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/solid";
 import Movie from "@/components/Movie.vue";
 import { useMoviesStore } from "../stores/movies";
+import ErrorComponent from "./ErrorComponent.vue";
 defineProps({
 	movies: {
 		type: Object,
@@ -61,7 +62,7 @@ const handlePrevPage = () => {
 
 <style lang="scss" scoped>
 .movies-error-container {
-	@apply text-2xl bg-red-700 p-4 rounded-2xl self-center text-center;
+	@apply self-center;
 }
 .pagination-container {
 	@apply grid grid-cols-2 gap-8 w-[70%] mx-auto mb-4;

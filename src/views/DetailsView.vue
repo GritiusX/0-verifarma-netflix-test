@@ -1,6 +1,6 @@
 <template>
 	<div v-if="store.isLoading" class="loading-state-classes">
-		<p class="text-2xl">Loading, please wait</p>
+		<LoadingComponent />
 	</div>
 	<section v-else class="main-container-section">
 		<div class="image-container">
@@ -86,11 +86,11 @@
 
 <script setup>
 import { onMounted, computed } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import { useMoviesStore } from "../stores/movies";
+import LoadingComponent from "../components/LoadingComponent.vue";
 
 const store = useMoviesStore();
-const router = useRouter();
 const route = useRoute();
 onMounted(() => {
 	store.getMovieById(route.params.id);
@@ -110,11 +110,11 @@ const filteredMovie = computed(() => {
 </script>
 
 <style scoped>
-.loading-state-classes {
-	@apply bg-gray-600 w-full xs:w-[90%] sm:w-[50%] lg:w-[40%] 2xl:w-[30%] 4xl:w-[25%] text-center self-center py-2 px-3 rounded-lg;
-}
 .main-container-section {
 	@apply flex flex-col lg:grid lg:grid-cols-2 w-full gap-4 mx-auto;
+}
+.loading-state-classes {
+	@apply bg-gray-600 w-full xs:w-[90%] sm:w-[50%] lg:w-[40%] 2xl:w-[30%] 4xl:w-[25%] text-center self-center py-2 px-3 rounded-lg;
 }
 .image-container {
 	@apply flex justify-center;
