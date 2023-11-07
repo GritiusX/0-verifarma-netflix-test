@@ -1,31 +1,27 @@
 <template>
 	<router-link :to="`/${movie.imdbID}`">
-		<Card
-			class="flex flex-col gap-3 w-full h-[30rem] xs:w-[16rem] items-center px-3 py-3 rounded-xl bg-gray-600 hover:text-red-800 hover:bg-gray-400 transition-all duration-300"
-		>
+		<Card class="card-container">
 			<template #header>
 				<img
-					class="h-[390px] w-[280px] object-cover rounded-xl"
+					class="card-poster"
 					v-if="shouldDisplayImage"
 					:alt="movie.Title"
 					:src="movie.Poster"
 				/>
 				<img
-					class="h-[390px] w-[280px] object-contain rounded-xl"
+					class="card-no-poster"
 					v-else
 					alt="Image not found"
 					src="@/assets/no-image.png"
 				/>
 			</template>
 			<template #title>
-				<div class="w-full">
-					<p class="w-full font-medium text-lg text-center line-clamp-1">
-						{{ movie.Title }}
-					</p>
-				</div>
+				<p class="movie-title">
+					{{ movie.Title }}
+				</p>
 			</template>
 			<template #subtitle>
-				<p class="font-medium text-lg text-center">({{ movie.Year }})</p>
+				<p class="movie-year">({{ movie.Year }})</p>
 			</template>
 		</Card>
 	</router-link>
@@ -45,4 +41,20 @@ const shouldDisplayImage = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.card-container {
+	@apply flex flex-col gap-3 w-full h-[30rem] xs:w-[16rem] items-center px-3 py-3 rounded-xl bg-gray-600 hover:text-red-800 hover:bg-gray-400 transition-all duration-300;
+}
+.card-poster {
+	@apply h-[390px] w-[280px] object-cover rounded-xl;
+}
+.card-no-poster {
+	@apply h-[390px] w-[280px] object-contain rounded-xl;
+}
+.movie-title {
+	@apply w-full font-medium text-lg text-center line-clamp-1;
+}
+.movie-year {
+	@apply font-medium text-lg text-center;
+}
+</style>

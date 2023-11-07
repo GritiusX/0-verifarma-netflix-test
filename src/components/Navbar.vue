@@ -25,10 +25,10 @@
 					/>
 					<MagnifyingGlassIcon
 						@click="toggleSearchbar"
-						class="h-8 w-8 cursor-pointer hover:text-red-500 transition-all duration-200"
+						class="magnifying-glass-icon"
 					/>
 				</form>
-				<div class="flex gap-3 items-center cursor-pointer" @click="logoutUser">
+				<div class="logout-user-button" @click="logoutUser">
 					<UserIcon class="h-8 w-8" />
 					<p v-if="userStore.user" class="">
 						{{ userStore.user.full_name }}
@@ -41,7 +41,7 @@
 			class="mobile-menu-button"
 			@click="toggleMobileMenu"
 		>
-			<Bars3Icon class="h-8 w-8 text-blue-500" />
+			<Bars3Icon class="h-8 w-8" />
 		</div>
 	</nav>
 	<XyzTransition xyz="fade up">
@@ -49,7 +49,7 @@
 			<router-link to="/" activeClass="active-router-link-class"
 				>Home</router-link
 			>
-			<span class="line-through">Profile</span>
+			<span @click="logoutUser">Profile</span>
 		</div>
 	</XyzTransition>
 </template>
@@ -88,6 +88,9 @@ const handleSearchForm = () => {
 };
 const logoutUser = () => {
 	userStore.logoutUser();
+	if (mobileMenu.value) {
+		mobileMenu.value = false;
+	}
 };
 </script>
 
@@ -124,5 +127,11 @@ const logoutUser = () => {
 }
 .router-link-class {
 	@apply hover:text-red-300;
+}
+.magnifying-glass-icon {
+	@apply h-8 w-8 cursor-pointer hover:text-red-500 transition-all duration-200;
+}
+.logout-user-button {
+	@apply flex gap-3 items-center cursor-pointer;
 }
 </style>

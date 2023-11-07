@@ -2,7 +2,7 @@
 	<form @submit.prevent="handleSearchForm" class="searchbar-form-container">
 		<h2 class="searchbar-title">MOVIES & SHOWS</h2>
 		<h4>Here you will be able to search for any movie or show you like!</h4>
-		<div class="flex gap-4">
+		<div class="searchbar-and-button-container">
 			<div class="p-input-icon-left searchbar-container">
 				<i class="pi pi-search" />
 				<InputText
@@ -11,10 +11,7 @@
 					placeholder="Search"
 				/>
 			</div>
-			<button
-				type="submit"
-				class="flex gap-2 justify-center py-2 px-3 rounded-lg w-28 bg-red-500 hover:bg-red-700 transition-all duration-300"
-			>
+			<button type="submit" class="search-button">
 				<MagnifyingGlassIcon class="h-6 w-6" /> Search
 			</button>
 		</div>
@@ -41,6 +38,9 @@ const handleSearchForm = () => {
 .searchbar-form-container {
 	@apply flex flex-col gap-4 pb-7;
 }
+.searchbar-and-button-container {
+	@apply flex gap-4;
+}
 .searchbar-title {
 	@apply text-3xl tracking-wider cursor-default;
 }
@@ -55,5 +55,8 @@ const handleSearchForm = () => {
 }
 .latest-search-title {
 	@apply text-lg;
+}
+.search-button {
+	@apply flex gap-2 justify-center py-2 px-3 rounded-lg w-28 bg-red-500 hover:bg-red-700 transition-all duration-300;
 }
 </style>

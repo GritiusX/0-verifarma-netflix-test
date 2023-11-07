@@ -2,112 +2,81 @@
 	<div v-if="store.isLoading" class="loading-state-classes">
 		<p class="text-2xl">Loading, please wait</p>
 	</div>
-	<section
-		v-else
-		class="flex flex-col lg:grid lg:grid-cols-2 w-full gap-4 mx-auto"
-	>
-		<div class="flex justify-center">
+	<section v-else class="main-container-section">
+		<div class="image-container">
 			<img
-				class="w-full sm:w-[60%] lg:w-[90%] xl:w-[70%] 2xl:w-[50%] rounded-lg"
+				class="image-classes"
 				v-if="filteredMovie.Poster"
 				:src="filteredMovie.Poster"
 				:alt="filteredMovie.Title"
 			/>
 			<img v-else src="@/assets/no-image.png" :alt="filteredMovie.Title" />
 		</div>
-		<div class="flex flex-col w-full gap-3 mx-auto">
-			<h2 class="text-3xl text-center sm:text-start font-bold text-red-500">
+		<div class="movie-info-container">
+			<h2 class="movie-title">
 				{{ filteredMovie.Title }}
 			</h2>
-			<div
-				class="flex flex-col sm:grid sm:grid-cols-2 gap-2 font-medium text-red-500"
-			>
-				<p class="text-lg">
+			<div class="year-info-section">
+				<p>
 					Year:
-					<span class="font-normal text-neutral-200">{{
-						filteredMovie.Year
-					}}</span>
+					<span>{{ filteredMovie.Year }}</span>
 				</p>
-				<p class="text-lg">
+				<p>
 					Rated:
-					<span class="font-normal text-neutral-200">{{
-						filteredMovie.Rated
-					}}</span>
+					<span>{{ filteredMovie.Rated }}</span>
 				</p>
-				<p class="text-lg">
+				<p>
 					Released date:
-					<span class="font-normal text-neutral-200">{{
-						filteredMovie.Released
-					}}</span>
+					<span>{{ filteredMovie.Released }}</span>
 				</p>
-				<p class="text-lg">
+				<p>
 					Duration:
-					<span class="font-normal text-neutral-200">{{
-						filteredMovie.Runtime
-					}}</span>
+					<span>{{ filteredMovie.Runtime }}</span>
 				</p>
 			</div>
-			<div
-				class="flex flex-col sm:grid sm:grid-rows-2 sm:grid-cols-2 gap-2 font-medium text-red-500"
-			>
-				<p class="text-lg">
+			<div class="genre-director-section">
+				<p>
 					Genre:
-					<span class="font-normal text-neutral-200">{{
-						filteredMovie.Genre
-					}}</span>
+					<span>{{ filteredMovie.Genre }}</span>
 				</p>
-				<p class="text-lg">
+				<p>
 					Director:
-					<span class="font-normal text-neutral-200">{{
-						filteredMovie.Director
-					}}</span>
+					<span>{{ filteredMovie.Director }}</span>
 				</p>
-				<p class="text-lg col-span-2">
+				<p>
 					Main actors:
-					<span class="font-normal text-neutral-200">{{
-						filteredMovie.Actors
-					}}</span>
+					<span>{{ filteredMovie.Actors }}</span>
 				</p>
 			</div>
-			<p class="text-lg my-4">{{ filteredMovie.Plot }}</p>
-			<div
-				class="flex flex-col sm:grid sm:grid-rows-3 gap-x-4 gap-y-2 font-medium text-red-500"
-			>
-				<p class="text-lg">
+			<p class="movie-plot-classes">
+				{{ filteredMovie.Plot }}
+			</p>
+			<div class="language-country-section">
+				<p>
 					Language:
-					<span class="font-normal text-neutral-200">
+					<span>
 						{{ filteredMovie.Language }}
 					</span>
 				</p>
-				<p class="text-lg">
+				<p>
 					Country:
-					<span class="font-normal text-neutral-200">
-						{{ filteredMovie.Country }}</span
-					>
+					<span> {{ filteredMovie.Country }}</span>
 				</p>
-				<p class="text-lg">
+				<p>
 					Awards:
-					<span class="font-normal text-neutral-200">
-						{{ filteredMovie.Awards }}</span
-					>
+					<span> {{ filteredMovie.Awards }}</span>
 				</p>
 			</div>
 
-			<div
-				class="flex flex-col sm:grid sm:grid-rows-3 gap-x-4 gap-y-2 font-medium text-red-500"
-			>
-				<p
-					v-for="ratings in filteredMovie.Ratings"
-					:key="ratings.Source"
-					class="text-lg"
-				>
+			<div class="ratings-section">
+				<p v-for="ratings in filteredMovie.Ratings" :key="ratings.Source">
 					{{ ratings.Source }}:
-					<span class="font-normal text-neutral-200">{{ ratings.Value }}</span>
+					<span>{{ ratings.Value }}</span>
 				</p>
 			</div>
-			<p class="text-red-500 text-lg font-medium">
+			<p class="box-office-paragraph">
 				Box Office:
-				<span class="font-normal text-neutral-200">
+				<span>
 					{{ filteredMovie.BoxOffice }}
 				</span>
 			</p>
@@ -116,15 +85,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useMoviesStore } from "../stores/movies";
 
 const store = useMoviesStore();
 const router = useRouter();
 const route = useRoute();
-console.log("route", route);
-console.log("router", router);
 onMounted(() => {
 	store.getMovieById(route.params.id);
 });
@@ -145,5 +112,44 @@ const filteredMovie = computed(() => {
 <style scoped>
 .loading-state-classes {
 	@apply bg-gray-600 w-full xs:w-[90%] sm:w-[50%] lg:w-[40%] 2xl:w-[30%] 4xl:w-[25%] text-center self-center py-2 px-3 rounded-lg;
+}
+.main-container-section {
+	@apply flex flex-col lg:grid lg:grid-cols-2 w-full gap-4 mx-auto;
+}
+.image-container {
+	@apply flex justify-center;
+}
+.image-classes {
+	@apply w-full sm:w-[60%] lg:w-[90%] xl:w-[70%] 2xl:w-[50%] rounded-lg;
+}
+.movie-info-container {
+	@apply flex flex-col w-full gap-3 mx-auto;
+}
+.movie-title {
+	@apply text-3xl text-center sm:text-start font-bold text-red-500;
+}
+.year-info-section {
+	@apply flex flex-col sm:grid sm:grid-cols-2 gap-2 font-medium text-red-500;
+}
+p {
+	@apply text-lg;
+}
+span {
+	@apply font-normal text-neutral-200;
+}
+.genre-director-section {
+	@apply flex flex-col sm:grid sm:grid-rows-2 sm:grid-cols-2 gap-2 font-medium text-red-500;
+}
+.movie-plot-classes {
+	@apply text-lg my-4 xl:w-[80%] 3xl:w-[75%];
+}
+.language-country-section {
+	@apply flex flex-col sm:grid sm:grid-rows-3 gap-x-4 gap-y-2 font-medium text-red-500;
+}
+.ratings-section {
+	@apply flex flex-col sm:grid sm:grid-rows-3 gap-x-4 gap-y-2 font-medium text-red-500;
+}
+.box-office-paragraph {
+	@apply text-red-500 text-lg font-medium;
 }
 </style>
