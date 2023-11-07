@@ -58,7 +58,7 @@ export const useUserStore = defineStore("userStore", () => {
 		});
 		userCreated.value = true;
 		reset("registerForm");
-		return setInterval(() => {
+		return setTimeout(() => {
 			router.push("/login");
 		}, 3000);
 	};
