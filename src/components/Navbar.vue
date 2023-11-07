@@ -17,20 +17,23 @@
 
 			<span class="sub-nav-buttons">
 				<form @submit.prevent="handleSearchForm" class="search-bar-container">
-					<XyzTransition xyz="fade left duration-5 ease-in-out">
-						<InputText
-							v-if="searchbarClicked"
-							class="navbar-input-classes"
-							v-model="store.searchInputValue"
-							placeholder="Movie search"
-						/>
-					</XyzTransition>
+					<InputText
+						v-if="searchbarClicked"
+						class="navbar-input-classes"
+						v-model="store.searchInputValue"
+						placeholder="Movie search"
+					/>
 					<MagnifyingGlassIcon
 						@click="toggleSearchbar"
 						class="h-8 w-8 cursor-pointer hover:text-red-500 transition-all duration-200"
 					/>
 				</form>
-				<UserIcon class="h-8 w-8 cursor-not-allowed" />
+				<div class="flex gap-3 items-center cursor-pointer" @click="logoutUser">
+					<UserIcon class="h-8 w-8" />
+					<p v-if="userStore.user" class="">
+						{{ userStore.user.full_name }}
+					</p>
+				</div>
 			</span>
 		</div>
 		<div
@@ -83,6 +86,9 @@ const handleSearchForm = () => {
 	}
 	store.getAllMovies(store.searchInputValue);
 };
+const logoutUser = () => {
+	userStore.logoutUser();
+};
 </script>
 
 <style scoped>
@@ -111,10 +117,10 @@ const handleSearchForm = () => {
 	@apply sm:hidden;
 }
 .sub-nav-buttons {
-	@apply flex items-center gap-6 justify-end w-full mr-10;
+	@apply flex items-center gap-4 justify-end w-full;
 }
 .search-bar-container {
-	@apply flex w-full lg:w-1/2 xl:w-1/3 3xl:w-1/5 justify-end items-center gap-4;
+	@apply flex w-[70%] lg:w-1/2 xl:w-1/3 3xl:w-1/5 justify-end items-center gap-4;
 }
 .router-link-class {
 	@apply hover:text-red-300;

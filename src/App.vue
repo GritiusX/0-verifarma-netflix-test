@@ -1,7 +1,11 @@
 <template>
 	<Navbar />
 	<main class="main-background">
-		<RouterView />
+		<RouterView v-slot="{ Component }">
+			<transition name="fadeIn" mode="out-in">
+				<component :is="Component" />
+			</transition>
+		</RouterView>
 	</main>
 	<Footer />
 </template>
@@ -21,5 +25,14 @@ import { RouterView } from "vue-router";
 }
 .navbar-input-classes {
 	@apply p-2 bg-zinc-900 text-neutral-200 font-normal w-full rounded-lg outline-offset-0 outline-1 outline-red-300 placeholder:text-gray-400;
+}
+.fadeIn-enter-active,
+.fadeIn-leave-active {
+	transition: opacity 0.5s ease;
+}
+
+.fadeIn-enter-from,
+.fadeIn-leave-to {
+	opacity: 0;
 }
 </style>

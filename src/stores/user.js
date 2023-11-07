@@ -26,13 +26,13 @@ export const useUserStore = defineStore("userStore", () => {
 		userCreated.value = false;
 		userAlreadyExists.value = false;
 
-		const user = {
+		const userToBeAdded = {
 			id: (Math.random() + 1).toString(36).substring(7),
 			...payload,
 		};
 
 		const userExists = registeredUsers.value.find(
-			(regUser) => regUser.email === user.email
+			(regUser) => regUser.email === userToBeAdded.email
 		);
 
 		if (userExists) {
@@ -45,7 +45,7 @@ export const useUserStore = defineStore("userStore", () => {
 			return (userAlreadyExists.value = true);
 		}
 
-		registeredUsers.value.push(user);
+		registeredUsers.value.push(userToBeAdded);
 		localStorage.setItem(
 			"registered-users",
 			JSON.stringify(registeredUsers.value)
@@ -74,13 +74,24 @@ export const useUserStore = defineStore("userStore", () => {
 		)
 			? true
 			: false;
-		console.log(userExists);
 		if (userExists) {
-			console.log("loginUser", payload);
+			user.value = registeredUsers.value.find(
+				(regUser) => regUser.email === payload.email
+			);
+			console.log("userExists", user.value);
+
 			return (isAuthenticated.value = true);
 		}
-		console.log("what??");
 		return (userNotExist.value = true);
+	};
+
+	const logoutUser = () => {
+		if (user.value) {
+			user.value = undefined;
+			isAuthenticated.value = false;
+			router.push("/login");
+		}
+		return;
 	};
 
 	return {
@@ -95,5 +106,6 @@ export const useUserStore = defineStore("userStore", () => {
 		userNotExistMessage,
 		registerUser,
 		loginUser,
+		logoutUser,
 	};
 });
