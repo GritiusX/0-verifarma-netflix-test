@@ -34,7 +34,7 @@ export const useMoviesStore = defineStore("moviesStore", () => {
 			isLoading.value = true;
 			hideNextMovieBtn.value = false;
 			const { data } = await axios.get(
-				`http://${API_URL}/?apikey=${API_KEY}&&s=${keyword}`
+				`https://${API_URL}/?apikey=${API_KEY}&&s=${keyword}`
 			);
 			movies.value = data.Search;
 			totalPages.value = Math.ceil(data.totalResults / 10);
@@ -51,7 +51,7 @@ export const useMoviesStore = defineStore("moviesStore", () => {
 				const nextPage = actualPage.value + 1;
 				const keyword = recentSearch.value;
 				const { data } = await axios.get(
-					`http://${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${nextPage}`
+					`https://${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${nextPage}`
 				);
 				movies.value = data.Search;
 				actualPage.value = nextPage;
@@ -71,7 +71,7 @@ export const useMoviesStore = defineStore("moviesStore", () => {
 				const prevPage = actualPage.value - 1;
 				const keyword = recentSearch.value;
 				const { data } = await axios.get(
-					`http://${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${prevPage}`
+					`https://${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${prevPage}`
 				);
 				movies.value = data.Search;
 				actualPage.value = prevPage;
@@ -89,7 +89,7 @@ export const useMoviesStore = defineStore("moviesStore", () => {
 		isLoading.value = true;
 		try {
 			const { data } = await axios.get(
-				`http://${API_URL}?apikey=${API_KEY}&i=${movieId}&plot=full`
+				`https://${API_URL}?apikey=${API_KEY}&i=${movieId}&plot=full`
 			);
 			movie.value = data;
 		} catch (error) {
